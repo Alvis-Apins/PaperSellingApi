@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\PartnerController;
+use App\Http\Controllers\Api\V1\SaleController;
+use App\Http\Controllers\Api\V1\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('partners', PartnerController::class);
+Route::apiResource('sales', SaleController::class);
+Route::apiResource('warehouse', WarehouseController::class);

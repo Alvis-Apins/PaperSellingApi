@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PartnerRequest;
 use App\Http\Resources\PartnerResource;
 use App\Models\Partner;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class PartnerController extends Controller
 {
@@ -34,7 +34,7 @@ class PartnerController extends Controller
         return new PartnerResource($partner);
     }
 
-    public function destroy(Partner $partner)
+    public function destroy(Partner $partner): Response
     {
         $partner->delete();
         return response()->noContent();
