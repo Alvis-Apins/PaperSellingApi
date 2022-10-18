@@ -16,3 +16,4 @@ yarn-error.log
 *.local
 dist
 dist-ssr
+.env
