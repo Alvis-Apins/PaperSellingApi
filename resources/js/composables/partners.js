@@ -58,6 +58,6 @@ export default function usePartners() {
         getPartner,
         destroyPartner,
         storePartner,
-        updatePartner
+        updatePartner,
     }
 }

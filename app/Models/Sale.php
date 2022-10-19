@@ -20,6 +20,6 @@ class Sale extends Model
 
     public function warehouse(): BelongsToMany
     {
-        return $this->belongsToMany(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class, 'sale_warehouse');
     }
 }

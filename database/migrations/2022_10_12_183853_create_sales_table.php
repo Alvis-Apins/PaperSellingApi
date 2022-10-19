@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('partner_id');
             $table->float('total_price');
-            $table->boolean('payment_status')->default(false);
-            $table->boolean('deliver_status')->default(false);
             $table->timestamps();
             $table->foreign('partner_id')
                 ->references('id')

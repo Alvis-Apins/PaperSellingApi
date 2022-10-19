@@ -1,4 +1,6 @@
 <template>
+    <nav-bar></nav-bar>
+
     <div class="mt-2 mb-6 text-sm text-red-600" v-if="errors !== ''">
         {{ errors }}
     </div>
@@ -29,9 +31,11 @@
 <script>
 import {reactive} from "vue";
 import usePartners from "../../composables/partners";
+import NavBar from "../main/nav-bar.vue";
 
 
 export default {
+    components: {NavBar},
     setup() {
         const form = reactive({
             'company': '',
@@ -47,8 +51,6 @@ export default {
         const savePartner = async () => {
             await storePartner({...form});
         }
-
-
 
         return {
             form,

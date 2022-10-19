@@ -18,8 +18,6 @@ class SaleFactory extends Factory
     {
         return [
             'total_price' => fake()->randomFloat(2,120,220),
-            'payment_status' => fake()->boolean([90]),
-            'deliver_status' => fake()->boolean()
         ];
     }
 }

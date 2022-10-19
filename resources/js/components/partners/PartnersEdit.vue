@@ -1,4 +1,6 @@
 <template>
+    <nav-bar></nav-bar>
+
     <div class="mt-2 mb-6 text-sm text-red-600" v-if="errors !== ''">
         {{ errors }}
     </div>
@@ -30,8 +32,10 @@
 <script>
 import usePartners from "../../composables/partners";
 import {onMounted} from "vue";
+import NavBar from "../main/nav-bar.vue";
 
 export default {
+    components: {NavBar},
     props: {
         id:{
             required: true,

@@ -1,21 +1,10 @@
 <template>
-
     <nav-bar></nav-bar>
 
-    <div class="border-black border p-2 w-fit h-fit bg-blue-500 hover:bg-black hover:text-red-600">
-        <router-link :to="{ name: 'partners.create'}"> Add Partner </router-link>
+    <div class="border-black border p-2 w-fit h-fit bg-blue-500">
+        <router-link :to="{ name: 'sales.create'}"> Add Sale </router-link>
     </div>
-    <!-- dropdown for partners style later
-    <div>
-        <select name="" id="" class="input">
-            <option>Select Partner</option>
-            <option :value="partner.id" v-for="partner in partners" :key="partner.id">
-                {{ partner.company }}
-            </option>
-        </select>
-    </div>
-    -->
-    <!-- table of partners -->
+
     <div class="w-1/2 h-auto flex items-center">
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -31,7 +20,10 @@
                                     Partner
                                 </th>
                                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Edit
+                                    Total
+                                </th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Date
                                 </th>
                                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Delete
@@ -39,17 +31,24 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template v-for="(partner,index) in partners" :key="partner.id">
+                            <template v-for="(sale,index) in sales" :key="sale.id">
                                 <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1}} </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        {{ partner.company }}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{ index + 1 }}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <router-link :to="{ name: 'partners.edit', params: { id: partner.id } }" class="border border-black p-2 hover:bg-blue-500">Edit</router-link>
+                                        {{ sale.partner.company }}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <button @click="deletePartner(partner.id)" class="border border-black p-2 hover:bg-blue-500">Delete</button>
+                                        € {{ sale.total_price }}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{ dateTime(sale.created_at) }}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <button @click="deleteSale(sale.id)" class="border border-black p-2">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             </template>
@@ -61,33 +60,37 @@
         </div>
     </div>
 
-
 </template>
-
 <script>
 import NavBar from "../main/nav-bar.vue";
-import usePartners from "../../composables/partners";
+import useSales from "../../composables/sales"
 import {onMounted} from "vue";
+import moment from 'moment';
 
 export default {
     components: {NavBar},
+    methods: {
+        dateTime(value) {
+            return moment(value, "YYYY-MM-DD hh:mm:ss").fromNow();
+        },
+    },
     setup() {
-        const {partners, getPartners, destroyPartner} = usePartners()
+        const {sales, getSales, destroySale} = useSales()
 
-        onMounted(getPartners)
+        onMounted(getSales)
 
-        const deletePartner = async (id) => {
+        const deleteSale = async (id) => {
             if (!window.confirm("Are you sure?")) {
                 return
             }
 
-            await destroyPartner(id);
-            await getPartners();
+            await destroySale(id);
+            await getSales();
         }
 
         return {
-            partners,
-            deletePartner
+            sales,
+            deleteSale
         }
     }
 }
