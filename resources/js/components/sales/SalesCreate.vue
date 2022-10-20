@@ -59,12 +59,6 @@
     <!--save button-->
     <div><button class="border border-black p-2" @click="saveSale()"> Save </button></div>
 
-
-
-
-
-
-
     <!-- pop up modal warehouse -->
     <div class="hidden" :class="{ show:showModal }">
         <div class="bg-blue-500">
@@ -91,8 +85,8 @@ export default {
     components: {NavBar},
     setup() {
         const { errors, storeSale } = useSales()
-        const {partners, getPartners} = usePartners()
-        const {warehouseItems, getWarehouseItems} = useWarehouse()
+        const { partners, getPartners } = usePartners()
+        const { warehouseItems, getWarehouseItems } = useWarehouse()
         const showModal = ref(false)
         const hideModal = ref(true)
 

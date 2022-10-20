@@ -1,62 +1,68 @@
 <template>
     <nav-bar></nav-bar>
 
-    <div class="border-black border p-2 w-fit h-fit bg-blue-500">
-        <router-link :to="{ name: 'sales.create'}"> Add Sale </router-link>
+    <div class="flex justify-end mr-4">
+        <div class="w-fit bg-black text-white hover:text-red-600">
+            <router-link :to="{ name: 'sales.create'}"><div class="p-2"> Add Sale </div></router-link>
+        </div>
     </div>
 
-    <div class="w-1/2 h-auto flex items-center">
-        <div class="flex flex-col">
-            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                    <div class="overflow-hidden">
-                        <table class="min-w-full">
-                            <thead class="border-b">
-                            <tr>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    #
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Partner
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Total
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Date
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Delete
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <template v-for="(sale,index) in sales" :key="sale.id">
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ index + 1 }}
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        {{ sale.partner.company }}
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        € {{ sale.total_price }}
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        {{ dateTime(sale.created_at) }}
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <button @click="deleteSale(sale.id)" class="border border-black p-2">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            </template>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <!-- table of sales -->
+    <div>
+        <div class="mb-20 mt-4">
+            <table class="min-w-full">
+                <thead class="bg-black border-b text-white">
+                <tr>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">#</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">Partner</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">Total</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">When</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">Details</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">View Sale</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left">Delete</th>
+                </tr>
+                </thead>
+                <template v-for="(sale,index) in sales" :key="sale.id">
+                    <tbody>
+                    <tr class="bg-white border-b border-gray-400">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}. </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ sale.partner.company }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> € {{ sale.total_price }} </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ dateTime(sale.created_at) }} </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <button v-on:click="showItems(index)" class="border border-black p-2 hover:bg-blue-500"> Details </button> </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <router-link :to="{ name: 'sales.show', params: { id: sale.id } }" class="border border-black p-2 hover:bg-blue-500">View Sale</router-link> </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <button @click="deleteSale(sale.id)" class="border border-black p-2 hover:bg-blue-500"> Delete </button> </td>
+                    </tr>
+                    </tbody>
+                </template>
+            </table>
+        </div>
+    </div>
+
+    <!-- table of warehouse items -->
+    <div>
+        <div class="mb-20 mt-4">
+            <table class="w-full">
+                <thead class="bg-black border-b text-white">
+                <tr>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left w-1/4">#</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left w-1/4">Description</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left w-1/4">Type</th>
+                    <th scope="col" class="text-sm font-medium px-6 py-4 text-left w-1/4">Price</th>
+                </tr>
+                </thead>
+                <tbody v-if="salesItems && salesItems !== false">
+                <template v-for="(item,index) in salesItems[0]" :key="item.id">
+                    <tr class="bg-white border-b border-gray-400">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}. </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> € {{ item.item }} </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ item.type }} </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ item.price }} </td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -64,7 +70,7 @@
 <script>
 import NavBar from "../main/nav-bar.vue";
 import useSales from "../../composables/sales"
-import {onMounted} from "vue";
+import {onMounted, reactive} from "vue";
 import moment from 'moment';
 
 export default {
@@ -76,6 +82,7 @@ export default {
     },
     setup() {
         const {sales, getSales, destroySale} = useSales()
+        let salesItems = reactive({0:false})
 
         onMounted(getSales)
 
@@ -88,9 +95,19 @@ export default {
             await getSales();
         }
 
+        const showItems = (index) => {
+            console.log(sales.value[index].warehouse)
+            if (salesItems[0] === sales.value[index].warehouse) {
+                salesItems[0].remove
+            }
+            salesItems[0] = sales.value[index].warehouse
+        }
+
         return {
             sales,
-            deleteSale
+            salesItems,
+            deleteSale,
+            showItems
         }
     }
 }

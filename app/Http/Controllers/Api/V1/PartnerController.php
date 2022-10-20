@@ -14,7 +14,10 @@ class PartnerController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        return PartnerResource::collection(Partner::all());
+        return PartnerResource::collection(
+            Partner::with('sale')
+                ->get()
+        );
     }
 
     public function store(PartnerRequest $request): PartnerResource

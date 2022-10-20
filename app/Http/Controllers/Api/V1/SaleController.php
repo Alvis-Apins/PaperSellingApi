@@ -17,7 +17,7 @@ class SaleController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return SaleResource::collection(
-            Sale::with('partner')
+            Sale::with('partner', 'warehouse')
                 ->orderBy('created_at', 'desc')
                 ->get()
         );
@@ -43,7 +43,7 @@ class SaleController extends Controller
 
     public function show(Sale $sale): SaleResource
     {
-        return new SaleResource($sale);
+        return new SaleResource($sale->load('warehouse', 'partner'));
     }
 
     public function update(SaleRequest $request, Sale $sale): SaleResource

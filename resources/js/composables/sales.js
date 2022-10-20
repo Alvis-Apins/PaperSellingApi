@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 export default function useSales() {
     const router = useRouter()
     const sales = ref([])
+    const sale = ref([])
     const errors = ref('')
 
     const getSales = async () => {
@@ -13,11 +14,15 @@ export default function useSales() {
         sales.value = response.data.data
     }
 
+    const getSale = async (id) => {
+        let response = await axios.get('/api/sales/' + id)
+        sale.value = response.data.data;
+    }
+
     const storeSale = async (data) => {
         errors.value = ''
         try {
             await axios.post('/api/sales/', data)
-            //console.log(await axios.post('/api/sales/', data))
             await router.push({name: 'sales.index'})
         } catch (e) {
             if (e.response.status === 422) {
@@ -36,8 +41,10 @@ export default function useSales() {
 
     return {
         sales,
+        sale,
         errors,
         getSales,
+        getSale,
         storeSale,
         destroySale,
     }

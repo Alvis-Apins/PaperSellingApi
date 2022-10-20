@@ -6,6 +6,7 @@ import PartnersCreate from '../components/partners/PartnersCreate.vue'
 import PartnersEdit from '../components/partners/PartnersEdit.vue'
 import SalesIndex from '../components/sales/SalesIndex.vue'
 import SalesCreate from '../components/sales/SalesCreate.vue'
+import SalesShow from   '../components/sales/SalesShow.vue'
 
 
 const routes = [
@@ -39,6 +40,12 @@ const routes = [
         path: '/sales/create',
         name: 'sales.create',
         component: SalesCreate
+    },
+    {
+        path: '/sales/:id',
+        name: 'sales.show',
+        component: SalesShow,
+        props: true
     },
 ]
 
