@@ -8,19 +8,23 @@ use App\Http\Resources\SaleResource;
 use App\Models\Partner;
 use App\Models\Sale;
 use App\Models\Warehouse;
+use App\Services\SaleService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class SaleController extends Controller
 {
 
+    private SaleService $saleService;
+
+    public function __construct(SaleService $saleService)
+    {
+        $this->saleService = $saleService;
+    }
+
     public function index(): AnonymousResourceCollection
     {
-        return SaleResource::collection(
-            Sale::with('partner', 'warehouse')
-                ->orderBy('created_at', 'desc')
-                ->get()
-        );
+        return $this->saleService->getAllSales();
     }
 
     public function store(SaleRequest $request): SaleResource
@@ -43,18 +47,11 @@ class SaleController extends Controller
 
     public function show(Sale $sale): SaleResource
     {
-        return new SaleResource($sale->load('warehouse', 'partner'));
-    }
-
-    public function update(SaleRequest $request, Sale $sale): SaleResource
-    {
-        $sale->update($request->validated());
-        return new SaleResource($sale);
+        return $this->saleService->getSale($sale);
     }
 
     public function destroy(Sale $sale): Response
     {
-        $sale->delete();
-        return response()->noContent();
+        return $this->saleService->deleteSale($sale);
     }
 }
