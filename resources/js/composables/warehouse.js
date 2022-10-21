@@ -3,7 +3,6 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 export default function useWarehouse() {
-    const router = useRouter()
     const warehouseItems = ref([])
 
     const getWarehouseItems = async () => {

@@ -1,7 +1,7 @@
 <template>
     <nav-bar></nav-bar>
 
-    Homepage instructions
+    Homepage instructions - There are no instructions
 </template>
 
 

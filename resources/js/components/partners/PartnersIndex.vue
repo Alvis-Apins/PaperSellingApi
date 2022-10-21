@@ -101,7 +101,6 @@ export default {
             return moment(value, "YYYY-MM-DD hh:mm:ss").fromNow();
         }
 
-
         return {
             partners,
             salesItems,

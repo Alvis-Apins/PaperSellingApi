@@ -10,7 +10,7 @@
                 </div>
                 <!-- nav bar right side -->
                 <div class="flex m-6">
-                    <router-link :to="{ name: 'partners.index'}"> Partners </router-link>
+                    <router-link :to="{ name: 'warehouse.index'}" class="hover:text-red-600 px-2"> Warehouse </router-link>
                 </div>
             </div>
         </div>

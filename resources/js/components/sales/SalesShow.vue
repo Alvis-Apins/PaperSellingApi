@@ -23,7 +23,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="p-9">
                         <div class="flex flex-col mx-0 mt-8">
                             <table class="min-w-full divide-y divide-slate-500">
@@ -47,7 +46,7 @@
                                 <template v-for="(item,index) in sale.warehouse" :key="sale.id">
                                     <tr class="border-b border-slate-200">
                                         <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-                                            <div class="font-medium text-slate-700"> {{ index + 1 }} </div>
+                                            <div class="font-medium text-slate-700"> {{ index + 1 }}</div>
                                         </td>
                                         <td class="hidden px-3 py-4 text-sm text-left text-slate-500 sm:table-cell">
                                             {{ item.item }}
@@ -89,13 +88,13 @@ import moment from 'moment';
 export default {
     components: {NavBar},
     props: {
-        id:{
+        id: {
             required: true,
             type: String
         }
     },
     setup(props) {
-        const { sale, getSale } = useSales()
+        const {sale, getSale} = useSales()
 
         onMounted(getSale(props.id))
 

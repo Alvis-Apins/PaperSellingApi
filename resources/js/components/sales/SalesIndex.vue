@@ -3,10 +3,11 @@
 
     <div class="flex justify-end mr-4">
         <div class="w-fit bg-black text-white hover:text-red-600">
-            <router-link :to="{ name: 'sales.create'}"><div class="p-2"> Add Sale </div></router-link>
+            <router-link :to="{ name: 'sales.create'}">
+                <div class="p-2"> Add Sale</div>
+            </router-link>
         </div>
     </div>
-
     <!-- table of sales -->
     <div>
         <div class="mb-20 mt-4">
@@ -25,20 +26,37 @@
                 <template v-for="(sale,index) in sales" :key="sale.id">
                     <tbody>
                     <tr class="bg-white border-b border-gray-400">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}. </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ sale.partner.company }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> € {{ sale.total_price }} </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ dateTime(sale.created_at) }} </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <button v-on:click="showItems(index)" class="border border-black p-2 hover:bg-blue-500"> Details </button> </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <router-link :to="{ name: 'sales.show', params: { id: sale.id } }" class="border border-black p-2 hover:bg-blue-500">View Sale</router-link> </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> <button @click="deleteSale(sale.id)" class="border border-black p-2 hover:bg-blue-500"> Delete </button> </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}.</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{ sale.partner.company }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> €
+                            {{ sale.total_price }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light">
+                            {{ dateTime(sale.created_at) }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light">
+                            <button v-on:click="showItems(index)" class="border border-black p-2 hover:bg-blue-500">
+                                Details
+                            </button>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light">
+                            <router-link :to="{ name: 'sales.show', params: { id: sale.id } }" class="border border-black p-2 hover:bg-blue-500">
+                                View Sale
+                            </router-link>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light">
+                            <button @click="deleteSale(sale.id)" class="border border-black p-2 hover:bg-blue-500">
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 </template>
             </table>
         </div>
     </div>
-
     <!-- table of warehouse items -->
     <div>
         <div class="mb-20 mt-4">
@@ -54,11 +72,14 @@
                 <tbody v-if="salesItems && salesItems !== false">
                 <template v-for="(item,index) in salesItems[0]" :key="item.id">
                     <tr class="bg-white border-b border-gray-400">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}. </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> € {{ item.item }} </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ item.type }} </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> {{ item.price }} </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ index + 1 }}.</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{ item.item }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light">
+                            {{ item.type }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-light"> €
+                            {{ item.price }}
+                        </td>
                     </tr>
                 </template>
                 </tbody>
@@ -82,7 +103,7 @@ export default {
     },
     setup() {
         const {sales, getSales, destroySale} = useSales()
-        let salesItems = reactive({0:false})
+        let salesItems = reactive({0: false})
 
         onMounted(getSales)
 
@@ -96,7 +117,6 @@ export default {
         }
 
         const showItems = (index) => {
-            console.log(sales.value[index].warehouse)
             if (salesItems[0] === sales.value[index].warehouse) {
                 salesItems[0].remove
             }

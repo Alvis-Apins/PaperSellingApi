@@ -7,7 +7,7 @@ import PartnersEdit from '../components/partners/PartnersEdit.vue'
 import SalesIndex from '../components/sales/SalesIndex.vue'
 import SalesCreate from '../components/sales/SalesCreate.vue'
 import SalesShow from   '../components/sales/SalesShow.vue'
-
+import WarehouseIndex from "../components/warehouse/WarehouseIndex.vue";
 
 const routes = [
     {
@@ -45,6 +45,12 @@ const routes = [
         path: '/sales/:id',
         name: 'sales.show',
         component: SalesShow,
+        props: true
+    },
+    {
+        path: '/warehouse',
+        name: 'warehouse.index',
+        component: WarehouseIndex,
         props: true
     },
 ]

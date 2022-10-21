@@ -14,7 +14,10 @@ class WarehouseController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        return WarehouseResource::collection(Warehouse::all());
+        return WarehouseResource::collection(
+            Warehouse::with('sale')
+            ->get()
+        );
     }
 
     public function store(WarehouseRequest $request): WarehouseResource

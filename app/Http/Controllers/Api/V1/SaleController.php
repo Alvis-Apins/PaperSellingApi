@@ -23,7 +23,7 @@ class SaleController extends Controller
         );
     }
 
-    public function store(SaleRequest $request)
+    public function store(SaleRequest $request): SaleResource
     {
         $warehouseItems = [];
 
