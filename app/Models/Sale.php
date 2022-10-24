@@ -11,7 +11,7 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['partner_id', 'total', 'payment_status', 'deliver_status'];
+    protected $fillable = ['partner_id', 'total_price'];
 
     public function partner(): BelongsTo
     {
